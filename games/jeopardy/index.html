@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NBA Jeopardy</title>
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Setup: host enters player names -->
+  <section class="setup" id="setup">
+    <a class="back" href="../../" id="backLink">← All games</a>
+    <p class="eyebrow">Host mode · 6 random categories from a bank of <span id="catCount"></span></p>
+    <h1>NBA <span>Jeopardy!</span></h1>
+    <p class="lede">Put the board on a big screen and read each clue out loud. When a player answers, mark them right or wrong and their score updates automatically.</p>
+    <form id="setupForm" class="setup-card" novalidate>
+      <h2>Players</h2>
+      <div id="nameList" class="name-list"></div>
+      <div class="setup-actions">
+        <button type="button" class="ghost" id="addPlayer">+ Add player</button>
+        <button type="submit" class="go">Deal the board</button>
+      </div>
+      <p class="hint" id="setupHint"></p>
+    </form>
+    <button type="button" class="ghost resume" id="resumeBtn" hidden>Resume saved game</button>
+  </section>
+
+  <!-- Board -->
+  <section class="play" id="play" hidden>
+    <header class="bar">
+      <div class="logo">NBA <b>Jeopardy!</b></div>
+      <div class="bar-actions">
+        <span class="left" id="cluesLeft"></span>
+        <button type="button" class="ghost sm" id="undoBtn" disabled>Undo</button>
+        <button type="button" class="ghost sm" id="newBoardBtn">New board</button>
+        <button type="button" class="ghost sm" id="endBtn">End game</button>
+      </div>
+    </header>
+    <div class="confirm" id="confirmBar" hidden>
+      <span id="confirmText"></span>
+      <button type="button" class="go sm" id="confirmYes">Yes</button>
+      <button type="button" class="ghost sm" id="confirmNo">Cancel</button>
+    </div>
+
+    <div class="board-wrap">
+      <div class="board" id="board"></div>
+    </div>
+
+    <!-- Open clue -->
+    <div class="clue" id="clue" hidden role="dialog" aria-modal="true" aria-labelledby="clueText">
+      <div class="clue-head">
+        <span id="clueCat"></span>
+        <span class="clue-val" id="clueVal"></span>
+      </div>
+      <p class="clue-text" id="clueText"></p>
+      <p class="clue-answer" id="clueAnswer" hidden></p>
+      <div class="clue-actions">
+        <button type="button" class="go" id="revealBtn">Show answer</button>
+        <button type="button" class="ghost" id="noOneBtn">No one got it</button>
+        <button type="button" class="link" id="cancelBtn">Put back on board</button>
+      </div>
+      <p class="hint">Mark each player below. ✓ adds the clue's value, ✗ subtracts it.</p>
+    </div>
+
+    <!-- Final standings -->
+    <div class="final" id="final" hidden>
+      <p class="eyebrow">Final scores</p>
+      <h2 id="winner"></h2>
+      <ol id="standings"></ol>
+      <div class="clue-actions">
+        <button type="button" class="go" id="againBtn">New board, same players</button>
+        <button type="button" class="ghost" id="changePlayersBtn">Change players</button>
+      </div>
+    </div>
+
+    <!-- Scoreboard: always at the bottom -->
+    <footer class="scores" id="scores"></footer>
+  </section>
+
+  <script src="categories.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
