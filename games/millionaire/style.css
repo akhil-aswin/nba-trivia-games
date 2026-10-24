@@ -61,6 +61,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--prize); outline
   color: var(--muted);
 }
 .brand b { color: var(--prize); font-weight: 700; }
+.brand { text-align: right; }
 .ladder-toggle {
   display: none;
   background: transparent;
@@ -92,13 +93,19 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--prize); outline
   margin: 0;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(3rem, 11vw, 5.5rem);
-  line-height: 0.9;
+  font-size: clamp(2rem, 7vw, 3.4rem);
+  line-height: 0.95;
   text-transform: uppercase;
   text-wrap: balance;
 }
+.intro h1 small {
+  display: block;
+  font-size: 1.75em;  /* same size as "Millionaire" */
+  color: var(--text);
+}
 .intro h1 span {
   display: block;
+  font-size: 1.75em;
   background: linear-gradient(180deg, #fff6d8 0%, var(--prize) 55%, #c98a12 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -134,6 +141,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--prize); outline
 }
 .cta:hover { transform: translateY(-1px); box-shadow: 0 0 24px rgba(255, 201, 74, 0.35); }
 .best { margin: 0; color: var(--muted); font-size: 0.95rem; min-height: 1.4em; }
+.fine { margin: 0; color: var(--muted); opacity: 0.75; font-size: 0.8rem; }
 
 .prize {
   margin: 0;
@@ -149,7 +157,32 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--prize); outline
 .game { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 28px; align-items: start; }
 .stage { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
 
-.lifelines { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.toolbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.lifeline-panel {
+  border: 1px solid var(--rim-dim);
+  border-radius: 12px;
+  background: rgba(6, 10, 34, 0.55);
+  padding: 8px 14px 10px;
+}
+.panel-label {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--prize);
+}
+.lifelines { display: flex; gap: 14px; }
+.life-item { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 84px; }
+.life-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--text);
+}
+.life-item:has(.life:disabled) .life-label { opacity: 0.45; }
 .life {
   width: 64px;
   height: 42px;
@@ -176,7 +209,6 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--prize); outline
   border-radius: 2px;
 }
 .walk {
-  margin-left: auto;
   background: transparent;
   border: 1px solid var(--rim-dim);
   border-radius: 999px;
@@ -346,7 +378,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--prize); outline
   .loz > span { padding: 12px 24px; }
   .question > span { min-height: 96px; }
   .answer > span { min-height: 52px; }
-  .walk { margin-left: 0; }
+  .lifelines { gap: 8px; }
+  .life-item { width: 74px; }
+  .brand { display: none; }
+  .back, .ladder-toggle { white-space: nowrap; }
 }
 
 @media (prefers-reduced-motion: reduce) {

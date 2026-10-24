@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>NBA Millionaire</title>
+  <title>NBA Who Wants to Be a Millionaire</title>
   <meta name="claude:viewport-fit-sides" content="cover">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,37 +14,50 @@
   <main class="app">
     <header class="top">
       <a class="back" href="../../" id="backLink">← All games</a>
-      <div class="brand">NBA <b>Millionaire</b></div>
+      <div class="brand">NBA <b>Who Wants to Be a Millionaire</b></div>
       <button class="ladder-toggle" id="ladderToggle" type="button" aria-expanded="false" hidden>Prize ladder</button>
     </header>
 
     <!-- Start screen -->
     <section class="intro" id="intro">
       <p class="eyebrow">15 questions · 3 lifelines · $1,000,000</p>
-      <h1>NBA <span>Millionaire</span></h1>
+      <h1><small>NBA</small> Who Wants to Be a <span>Millionaire</span></h1>
       <p class="lede">Answer 15 NBA questions in a row to win the top prize. Each one is harder than the last, and every game draws a fresh set from 200 questions.</p>
       <ul class="rules">
         <li><b>Safe havens</b> at $1,000 and $32,000. Miss a question and you keep the last one you passed.</li>
         <li><b>Walk away</b> any time before you lock in an answer and keep what you've won.</li>
-        <li><b>Lifelines:</b> 50:50, Ask the Audience and Phone a Friend. Each one works once per game.</li>
+        <li><b>Lifelines:</b> 50/50, Ask the Audience and Phone a Friend. Each one works once per game.</li>
       </ul>
       <button class="cta" id="startBtn" type="button">Let's play</button>
       <p class="best" id="bestIntro"></p>
+      <p class="fine">A fan-made trivia game. Not affiliated with the NBA or the TV show.</p>
     </section>
 
     <!-- Game -->
     <section class="game" id="game" hidden>
       <div class="stage">
-        <div class="lifelines" role="group" aria-label="Lifelines">
-          <button class="life" id="lifeFifty" type="button" title="Remove two wrong answers"><span>50:50</span></button>
-          <button class="life" id="lifeAudience" type="button" title="Poll the audience">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="6" width="4" height="14" rx="1"/><rect x="17" y="9" width="4" height="11" rx="1"/></svg>
-            <span class="sr">Ask the Audience</span>
-          </button>
-          <button class="life" id="lifePhone" type="button" title="Phone a friend">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
-            <span class="sr">Phone a Friend</span>
-          </button>
+        <div class="toolbar">
+          <div class="lifeline-panel" role="group" aria-labelledby="lifelinesHeading">
+            <h2 class="panel-label" id="lifelinesHeading">Lifelines</h2>
+            <div class="lifelines">
+              <div class="life-item">
+                <button class="life" id="lifeFifty" type="button" aria-describedby="lblFifty"><span>50/50</span></button>
+                <span class="life-label" id="lblFifty">50/50</span>
+              </div>
+              <div class="life-item">
+                <button class="life" id="lifeAudience" type="button" aria-label="Ask the Audience">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="6" width="4" height="14" rx="1"/><rect x="17" y="9" width="4" height="11" rx="1"/></svg>
+                </button>
+                <span class="life-label" aria-hidden="true">Ask the Audience</span>
+              </div>
+              <div class="life-item">
+                <button class="life" id="lifePhone" type="button" aria-label="Phone a Friend">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+                </button>
+                <span class="life-label" aria-hidden="true">Phone a Friend</span>
+              </div>
+            </div>
+          </div>
           <button class="walk" id="walkBtn" type="button">Walk away</button>
         </div>
 
