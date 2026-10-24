@@ -7,12 +7,13 @@ const CATEGORIES = {
   records: "Records & Stats",
   draft: "Draft & Awards",
 };
-const TIER_NAMES = { 1: "Easy", 2: "Medium", 3: "Hard", 4: "Expert" };
+const TIER_NAMES = { 1: "Easy", 2: "Medium", 3: "Hard", 4: "Very Hard", 5: "Expert" };
 
 const LADDER = [100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 250000, 500000, 1000000];
 const SAFE_LEVELS = [4, 9]; // indexes into LADDER: $1,000 and $32,000
-// How many questions each tier contributes, in order: Q1–5 easy, Q6–10 medium, Q11–14 hard, Q15 expert.
-const TIER_PLAN = [[1, 5], [2, 5], [3, 4], [4, 1]];
+// How many questions each tier contributes, in order:
+// Q1–5 easy, Q6–8 medium, Q9–11 hard, Q12–14 very hard, Q15 expert.
+const TIER_PLAN = [[1, 5], [2, 3], [3, 3], [4, 3], [5, 1]];
 const KEYS = ["A", "B", "C", "D"];
 
 const $ = id => document.getElementById(id);
@@ -271,11 +272,11 @@ function useAudience() {
   const correctIdx = game.options.findIndex(o => o.correct);
 
   // The crowd gets shakier as questions get harder.
-  const [lo, hi] = { 1: [55, 85], 2: [40, 70], 3: [30, 55], 4: [22, 45] }[tier];
+  const [lo, hi] = { 1: [55, 85], 2: [42, 70], 3: [34, 58], 4: [28, 50], 5: [22, 45] }[tier];
   const votes = Array(4).fill(0);
   votes[correctIdx] = rand(lo, hi);
   // Now and then on hard questions the crowd is fooled by one answer.
-  if (tier >= 3 && Math.random() < 0.25 && live.length > 1) {
+  if (tier >= 3 && Math.random() < 0.2 + (tier - 3) * 0.05 && live.length > 1) {
     const decoy = shuffle(live.filter(i => i !== correctIdx))[0];
     votes[decoy] = votes[correctIdx] + rand(2, 12);
   }
@@ -313,7 +314,7 @@ function usePhone() {
   const tier = game.questions[game.level].d;
   const live = game.options.map((_, i) => i).filter(i => !game.removed.has(i));
   const correctIdx = game.options.findIndex(o => o.correct);
-  const knows = Math.random() < { 1: 0.95, 2: 0.85, 3: 0.65, 4: 0.5 }[tier];
+  const knows = Math.random() < { 1: 0.95, 2: 0.85, 3: 0.72, 4: 0.6, 5: 0.5 }[tier];
   const guess = knows ? correctIdx : shuffle(live.filter(i => i !== correctIdx))[0] ?? correctIdx;
   const sure = knows ? Math.round(rand(70, 95)) : Math.round(rand(35, 60));
   const name = FRIENDS[Math.floor(Math.random() * FRIENDS.length)];

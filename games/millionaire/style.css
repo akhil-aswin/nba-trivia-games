@@ -202,6 +202,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--prize); outline
 .chip.tier[data-tier="2"] { color: #ffd98a; background: rgba(255, 201, 74, 0.14); }
 .chip.tier[data-tier="3"] { color: #ffb08a; background: rgba(242, 107, 29, 0.16); }
 .chip.tier[data-tier="4"] { color: #ff9a9a; background: rgba(212, 60, 60, 0.18); }
+.chip.tier[data-tier="5"] { color: #ffd0ff; background: rgba(190, 80, 220, 0.22); }
 .playing {
   margin-left: auto;
   font-family: var(--font-display);
