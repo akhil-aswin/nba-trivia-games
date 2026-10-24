@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Higher or Lower · NBA Trivia</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+  <style>
+    .versus { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; margin-bottom: 16px; }
+    .player { background: var(--surface-2); border-radius: 12px; padding: 16px; text-align: center; }
+    .player .name { font-weight: 700; font-size: 1.1rem; }
+    .player .pts { font-size: 1.6rem; font-weight: 800; color: var(--accent); margin-top: 6px; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .choices button { text-align: center; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="site"><a class="home" href="../../">← All games</a></header>
+    <h1>📈 Higher or Lower</h1>
+    <p class="sub">Did the second player score more or fewer career regular-season points? (Retired players only.)</p>
+
+    <section class="card" id="play">
+      <div class="hud"><span>Streak: <b id="streak">0</b></span><span id="best"></span></div>
+      <div class="versus">
+        <div class="player"><div class="name" id="nameA"></div><div class="pts" id="ptsA"></div></div>
+        <div class="player"><div class="name" id="nameB"></div><div class="pts" id="ptsB">?</div></div>
+      </div>
+      <div class="choices" id="choices">
+        <button id="higher">⬆ Higher</button>
+        <button id="lower">⬇ Lower</button>
+      </div>
+      <p class="feedback" id="feedback"></p>
+      <button class="primary hidden" id="next">Next →</button>
+      <button class="primary hidden" id="again">Play again</button>
+    </section>
+  </main>
+
+  <script src="../../shared/utils.js"></script>
+  <script src="players.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

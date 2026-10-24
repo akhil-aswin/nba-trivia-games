@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MVP by Year · NBA Trivia</title>
+  <link rel="stylesheet" href="../../shared/styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <header class="site"><a class="home" href="../../">← All games</a></header>
+    <h1>🏆 MVP by Year</h1>
+    <p class="sub">Who won regular-season MVP? 10 seasons from 1979–80 to 2024–25.</p>
+
+    <section class="card" id="play">
+      <div class="hud"><span id="progress"></span><span id="score"></span></div>
+      <p class="question" id="question"></p>
+      <div class="options" id="options"></div>
+      <p class="feedback" id="feedback"></p>
+      <button class="primary hidden" id="next">Next →</button>
+    </section>
+
+    <section class="card hidden" id="done">
+      <h2>Final score</h2>
+      <div class="big-score" id="final"></div>
+      <p class="sub" id="best"></p>
+      <div class="actions">
+        <button class="primary" id="again">Play again</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../shared/utils.js"></script>
+  <script src="mvps.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

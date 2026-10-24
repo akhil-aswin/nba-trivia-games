@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NBA Trivia Games</title>
+  <link rel="stylesheet" href="shared/styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <h1>🏀 NBA Trivia Games</h1>
+    <p class="sub">Pick a game and test your hoops knowledge.</p>
+
+    <div class="grid" id="games"></div>
+  </main>
+
+  <script src="shared/utils.js"></script>
+  <script>
+    // To add a game: create games/<id>/index.html and add an entry here.
+    const GAMES = [
+      { id: "classic-quiz", emoji: "❓", title: "Classic Quiz",
+        desc: "10 multiple-choice questions on NBA history and legends." },
+      { id: "higher-lower", emoji: "📈", title: "Higher or Lower",
+        desc: "Who scored more career points? Keep your streak alive." },
+      { id: "mvp-by-year", emoji: "🏆", title: "MVP by Year",
+        desc: "Name the regular-season MVP for each season." },
+    ];
+
+    document.getElementById("games").innerHTML = GAMES.map(g => `
+      <a class="game-card" href="games/${g.id}/">
+        <div class="emoji">${g.emoji}</div>
+        <h2>${g.title}</h2>
+        <p>${g.desc}</p>
+        <div class="best">${getBest(g.id) ? "Your best: " + getBest(g.id) : ""}</div>
+      </a>`).join("");
+  </script>
+</body>
+</html>
