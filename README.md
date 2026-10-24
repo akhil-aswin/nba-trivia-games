@@ -4,11 +4,7 @@ A collection of browser-based NBA trivia games. It's plain HTML, CSS and JavaScr
 
 ## Games
 
-| Game | Folder | Description |
-| --- | --- | --- |
-| Classic Quiz | `games/classic-quiz/` | 10 random multiple-choice questions on NBA history |
-| Higher or Lower | `games/higher-lower/` | Guess whether the next player scored more career points |
-| MVP by Year | `games/mvp-by-year/` | Name the regular-season MVP for a given season |
+None yet.
 
 ## Running locally
 

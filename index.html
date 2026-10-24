@@ -12,20 +12,15 @@
     <p class="sub">Pick a game and test your hoops knowledge.</p>
 
     <div class="grid" id="games"></div>
+    <p class="sub" id="empty">No games yet. Check back soon!</p>
   </main>
 
   <script src="shared/utils.js"></script>
   <script>
     // To add a game: create games/<id>/index.html and add an entry here.
-    const GAMES = [
-      { id: "classic-quiz", emoji: "❓", title: "Classic Quiz",
-        desc: "10 multiple-choice questions on NBA history and legends." },
-      { id: "higher-lower", emoji: "📈", title: "Higher or Lower",
-        desc: "Who scored more career points? Keep your streak alive." },
-      { id: "mvp-by-year", emoji: "🏆", title: "MVP by Year",
-        desc: "Name the regular-season MVP for each season." },
-    ];
+    const GAMES = [];
 
+    document.getElementById("empty").hidden = GAMES.length > 0;
     document.getElementById("games").innerHTML = GAMES.map(g => `
       <a class="game-card" href="games/${g.id}/">
         <div class="emoji">${g.emoji}</div>
