@@ -11,33 +11,67 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Setup: host enters player names -->
+  <!-- Menu: pick a mode, and for multiplayer, which screen this is -->
   <section class="setup" id="setup">
     <a class="back" href="../../" id="backLink">← All games</a>
-    <p class="eyebrow">Host mode · 6 random categories from a bank of <span id="catCount"></span></p>
+    <p class="eyebrow">6 random categories from a bank of <span id="catCount"></span></p>
     <h1>NBA <span>Jeopardy!</span></h1>
-    <p class="lede">Put the board on a big screen and read each clue out loud. When a player answers, mark them right or wrong and their score updates automatically.</p>
-    <form id="setupForm" class="setup-card" novalidate>
-      <h2>Players</h2>
-      <div id="nameList" class="name-list"></div>
-      <div class="setup-actions">
-        <button type="button" class="ghost" id="addPlayer">+ Add player</button>
-        <button type="submit" class="go">Deal the board</button>
+
+    <div class="setup-card">
+      <h2>Mode</h2>
+      <div class="choices" role="group" aria-label="Mode">
+        <button type="button" class="choice" data-mode="single" aria-pressed="true">
+          <b>Single player</b>
+          <span>Type your answers. Scoring is automatic.</span>
+        </button>
+        <button type="button" class="choice" data-mode="multi" aria-pressed="false">
+          <b>Multiplayer</b>
+          <span>A host runs the board and keeps score for up to 6 players.</span>
+        </button>
       </div>
-      <p class="hint" id="setupHint"></p>
-    </form>
+
+      <div id="viewPick" hidden>
+        <h2>This screen is the…</h2>
+        <div class="choices" role="group" aria-label="Screen">
+          <button type="button" class="choice" data-view="host" aria-pressed="true">
+            <b>Host view</b>
+            <span>Shows the answers and the scoring buttons. Keep this screen to yourself.</span>
+          </button>
+          <button type="button" class="choice" data-view="player" aria-pressed="false">
+            <b>Player view</b>
+            <span>The board everyone watches, on a TV or shared screen. No answers until the host reveals them.</span>
+          </button>
+        </div>
+        <p class="tip">Using two screens? Open this game in a second window on the same computer, drag it to the TV, and choose <b>Player view</b> there. It follows the host automatically.</p>
+      </div>
+
+      <form id="setupForm" novalidate>
+        <div id="namesBlock">
+          <h2 id="namesTitle">Your name</h2>
+          <div id="nameList" class="name-list"></div>
+          <button type="button" class="ghost sm" id="addPlayer">+ Add player</button>
+        </div>
+        <p class="hint" id="setupHint"></p>
+        <button type="submit" class="go big" id="startBtn">Start</button>
+      </form>
+    </div>
     <button type="button" class="ghost resume" id="resumeBtn" hidden>Resume saved game</button>
   </section>
 
-  <!-- Board -->
+  <!-- Game -->
   <section class="play" id="play" hidden>
     <header class="bar">
-      <div class="logo">NBA <b>Jeopardy!</b></div>
+      <div class="bar-title">
+        <div class="logo">NBA <b>Jeopardy!</b></div>
+        <span class="role" id="roleBadge"></span>
+        <span class="link-status" id="linkStatus" hidden></span>
+      </div>
       <div class="bar-actions">
         <span class="left" id="cluesLeft"></span>
         <button type="button" class="ghost sm" id="undoBtn" disabled>Undo</button>
         <button type="button" class="ghost sm" id="newBoardBtn">New board</button>
         <button type="button" class="ghost sm" id="endBtn">End game</button>
+        <button type="button" class="ghost sm" id="leaveBtn" hidden>Leave</button>
       </div>
     </header>
     <div class="confirm" id="confirmBar" hidden>
@@ -48,6 +82,11 @@
 
     <div class="board-wrap">
       <div class="board" id="board"></div>
+      <div class="waiting" id="waiting" hidden>
+        <p class="eyebrow">Player view</p>
+        <h2>Waiting for the host…</h2>
+        <p>In another window on this computer, open this game, choose <b>Multiplayer → Host view</b> and deal the board. This screen will follow along.</p>
+      </div>
     </div>
 
     <!-- Open clue -->
@@ -57,13 +96,39 @@
         <span class="clue-val" id="clueVal"></span>
       </div>
       <p class="clue-text" id="clueText"></p>
+
+      <!-- Host only -->
+      <div class="host-answer" id="hostAnswer" hidden>
+        <span>Answer · only you can see this</span>
+        <b id="hostAnswerText"></b>
+      </div>
+
+      <!-- Shown to everyone once revealed -->
       <p class="clue-answer" id="clueAnswer" hidden></p>
-      <div class="clue-actions">
-        <button type="button" class="go" id="revealBtn">Show answer</button>
+
+      <!-- Single player -->
+      <form class="guess" id="guessForm" hidden novalidate>
+        <label class="sr" for="guess">Your answer</label>
+        <input id="guess" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer">
+        <button type="submit" class="go">Submit</button>
+        <button type="button" class="ghost" id="passBtn">Pass</button>
+      </form>
+      <div class="result" id="result" hidden>
+        <p class="verdict" id="verdict"></p>
+        <p class="your" id="yourAnswer"></p>
+        <div class="clue-actions">
+          <button type="button" class="go" id="backBtn">Back to board</button>
+          <button type="button" class="link" id="overrideBtn" hidden>I was right, count it</button>
+        </div>
+      </div>
+
+      <!-- Host controls -->
+      <div class="clue-actions" id="hostActions" hidden>
+        <button type="button" class="go" id="revealBtn">Show answer on player screen</button>
         <button type="button" class="ghost" id="noOneBtn">No one got it</button>
         <button type="button" class="link" id="cancelBtn">Put back on board</button>
       </div>
-      <p class="hint">Mark each player below. ✓ adds the clue's value, ✗ subtracts it.</p>
+      <p class="hint" id="clueHint"></p>
     </div>
 
     <!-- Final standings -->
@@ -71,9 +136,10 @@
       <p class="eyebrow">Final scores</p>
       <h2 id="winner"></h2>
       <ol id="standings"></ol>
-      <div class="clue-actions">
-        <button type="button" class="go" id="againBtn">New board, same players</button>
-        <button type="button" class="ghost" id="changePlayersBtn">Change players</button>
+      <p class="hint" id="bestNote"></p>
+      <div class="clue-actions" id="finalActions">
+        <button type="button" class="go" id="againBtn">New board</button>
+        <button type="button" class="ghost" id="menuBtn">Back to menu</button>
       </div>
     </div>
 
