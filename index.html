@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>NBA Trivia Games</title>
   <meta name="claude:viewport-fit-sides" content="cover">
-  <meta name="description" content="Free NBA trivia games: Who Wants to Be a Millionaire and Jeopardy!, built for hoops fans.">
+  <meta name="description" content="Free NBA trivia games: Who Wants to Be a Millionaire, Jeopardy! and a crossword, built for hoops fans.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Libre+Franklin:wght@400;500;600;700&family=Anton&family=Barlow+Condensed:wght@700&family=Saira+Condensed:wght@700;800&display=swap">
@@ -50,6 +50,17 @@
                    <div>$200</div><div class="done"></div><div>$200</div><div>$200</div>
                    <div>$400</div><div>$400</div><div class="done"></div><div>$400</div>
                  </div></div>`,
+      },
+      {
+        id: "crossword",
+        title: "NBA Crossword",
+        desc: "A fresh crossword every time, in three sizes, from a bank of 269 NBA answers.",
+        tags: ["Solo", "5×5, 8×8 or 12×12", "Check & reveal"],
+        poster: `<div class="poster crossword"><div class="cw-art">${
+          ["SWISH#", "P###O#", "U##BOL", "R###P#", "S#####"].map((row, r) => [...row].map((ch, c) =>
+            ch === "#" ? `<i></i>` : `<b>${[[0,0],[0,4],[2,3]].some(([y, x]) => y === r && x === c) ? `<em>${r === 0 && c === 0 ? 1 : r === 0 ? 2 : 3}</em>` : ""}${ch}</b>`
+          ).join("")).join("")
+        }</div></div>`,
       },
     ];
 

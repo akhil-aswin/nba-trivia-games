@@ -148,6 +148,14 @@ a:focus-visible { outline: 3px solid var(--orange); outline-offset: 4px; }
 .jep-art .head { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 0.8rem; color: #fff; text-transform: uppercase; text-align: center; line-height: 1.05; padding: 4px; }
 .jep-art .done { background: #071461; }
 
+/* Crossword poster: paper squares on charcoal */
+.poster.crossword { background: #121212; }
+.cw-art { display: grid; grid-template-columns: repeat(6, 26px); grid-auto-rows: 26px; gap: 2px; padding: 3px; background: #1a1a1a; border: 2px solid #f7f2e7; }
+.cw-art b, .cw-art i { display: grid; place-items: center; }
+.cw-art b { position: relative; background: #f7f2e7; color: #1a1a1a; font: 700 14px/1 var(--font-body); }
+.cw-art i { background: transparent; }
+.cw-art em { position: absolute; top: 1px; left: 2px; font: 600 7px/1 var(--font-body); font-style: normal; color: #4a463e; }
+
 .card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .card-body h2 {
   margin: 0;

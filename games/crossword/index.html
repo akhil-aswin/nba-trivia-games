@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NBA Crossword</title>
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Libre+Franklin:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <a class="back" href="../../" id="backLink">← All games</a>
+      <h1>NBA <span>Crossword</span></h1>
+      <div class="timer" id="timer" aria-live="off">0:00</div>
+    </header>
+
+    <div class="controls">
+      <div class="sizes" role="group" aria-label="Puzzle size">
+        <button type="button" data-size="small">Small <small>5×5</small></button>
+        <button type="button" data-size="medium">Medium <small>8×8</small></button>
+        <button type="button" data-size="large">Large <small>12×12</small></button>
+      </div>
+      <button type="button" class="cta" id="newBtn">New puzzle</button>
+    </div>
+
+    <div class="confirm" id="confirmBar" hidden>
+      <span id="confirmText"></span>
+      <button type="button" class="cta sm" id="confirmYes">Yes</button>
+      <button type="button" class="ghost sm" id="confirmNo">Cancel</button>
+    </div>
+
+    <div class="solved" id="solved" hidden>
+      <p class="solved-title" id="solvedTitle"></p>
+      <p id="solvedText"></p>
+      <button type="button" class="cta" id="againBtn">Play another</button>
+    </div>
+
+    <section class="board">
+      <div class="puzzle">
+        <div class="cluebar" id="cluebar">
+          <button type="button" class="nav" id="prevClue" aria-label="Previous clue">‹</button>
+          <p id="currentClue"></p>
+          <button type="button" class="nav" id="nextClue" aria-label="Next clue">›</button>
+        </div>
+
+        <div class="grid-wrap" id="gridWrap">
+          <div class="grid" id="grid" role="grid" aria-label="Crossword grid"></div>
+          <input id="kbd" class="kbd" type="text" inputmode="text" autocomplete="off" autocorrect="off"
+                 autocapitalize="characters" spellcheck="false" aria-label="Type a letter">
+          <p class="building" id="building" hidden>Building your puzzle…</p>
+        </div>
+
+        <div class="tools">
+          <div class="tool-group">
+            <span>Check</span>
+            <button type="button" data-act="check" data-scope="cell">Square</button>
+            <button type="button" data-act="check" data-scope="word">Word</button>
+            <button type="button" data-act="check" data-scope="all">Puzzle</button>
+          </div>
+          <div class="tool-group">
+            <span>Reveal</span>
+            <button type="button" data-act="reveal" data-scope="cell">Square</button>
+            <button type="button" data-act="reveal" data-scope="word">Word</button>
+            <button type="button" data-act="reveal" data-scope="all">Puzzle</button>
+          </div>
+          <button type="button" class="ghost sm" id="clearBtn">Clear</button>
+        </div>
+        <p class="note" id="note"></p>
+      </div>
+
+      <div class="clues">
+        <section>
+          <h2>Across</h2>
+          <ol id="acrossList"></ol>
+        </section>
+        <section>
+          <h2>Down</h2>
+          <ol id="downList"></ol>
+        </section>
+      </div>
+    </section>
+
+    <p class="fine">Click a square and type. Arrow keys move, Space or a second click switches direction, Tab jumps to the next clue.</p>
+  </main>
+
+  <script src="terms.js"></script>
+  <script src="generator.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

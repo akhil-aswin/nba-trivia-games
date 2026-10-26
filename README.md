@@ -8,6 +8,7 @@ A collection of browser-based NBA trivia games. It's plain HTML, CSS and JavaScr
 | --- | --- | --- |
 | NBA Who Wants to Be a Millionaire | `games/millionaire/` | 15-question money ladder with lifelines, drawn from a 200-question bank in five difficulty tiers |
 | NBA Jeopardy! | `games/jeopardy/` | 6 random categories from 34. Single player with typed answers, or multiplayer with a host view and a player view |
+| NBA Crossword | `games/crossword/` | Generated crosswords in 5×5, 8×8 and 12×12 from a bank of 269 clued answers |
 
 ## Running locally
 
