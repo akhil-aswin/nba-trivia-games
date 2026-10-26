@@ -18,7 +18,12 @@
   <script src="shared/utils.js"></script>
   <script>
     // To add a game: create games/<id>/index.html and add an entry here.
-    const GAMES = [];
+    const GAMES = [
+      { id: "millionaire", emoji: "💰", title: "NBA Who Wants to Be a Millionaire",
+        desc: "15 questions from Easy to Expert, three lifelines and a $1,000,000 top prize." },
+      { id: "jeopardy", emoji: "🟦", title: "NBA Jeopardy!",
+        desc: "Play solo with typed answers, or host a game for up to 6 players with a separate player screen." },
+    ];
 
     document.getElementById("empty").hidden = GAMES.length > 0;
     document.getElementById("games").innerHTML = GAMES.map(g => `
