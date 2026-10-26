@@ -1,121 +1,203 @@
+/* Home page. Layout: a dark arena with faint half-court lines behind a stacked title,
+   then one large card per game whose top half is a mini poster in that game's own look.
+   Deliberately single-theme (always dark), matching the games. */
 :root {
-  --bg: #0f1115;
-  --surface: #1a1d24;
-  --surface-2: #232733;
-  --text: #f2f3f5;
-  --muted: #9aa1ae;
-  --accent: #f26b1d;
-  --accent-2: #ff8f4d;
-  --good: #2fbf71;
-  --bad: #e5484d;
-  --radius: 14px;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* 60 / 30 / 10: charcoal everywhere, hardwood gold for identity, orange only for actions. */
+  --arena: #1a1a1a;                    /* 60%: asphalt, rubber, stadium */
+  --line: rgba(229, 169, 60, 0.16);    /* court lines in hardwood gold */
+  --card: #232220;
+  --card-edge: #34312c;
+  --text: #f5f2ec;
+  --muted: #aaa49a;
+  --gold: #e5a93c;                     /* 30%: hardwood maple */
+  --orange: #ee6730;                   /* 10%: basketball, CTAs and active states only */
+  --mil-navy: #0e1847;
+  --jep-blue: #0a1ea8;
+
+  /* Sports-page type: a heavy slab for headlines, a newspaper grotesque for everything else. */
+  --font-display: "Alfa Slab One", Rockwell, "Roboto Slab", serif;
+  --font-body: "Libre Franklin", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-cond: "Libre Franklin", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
   min-height: 100vh;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
   line-height: 1.5;
+  background-color: var(--arena);
+  /* Half-court: center circle and midcourt line, drawn faintly behind everything. */
+  background-image:
+    radial-gradient(circle at 50% 0, transparent 179px, var(--line) 180px, var(--line) 182px, transparent 183px),
+    radial-gradient(circle at 50% 0, transparent 59px, var(--line) 60px, var(--line) 62px, transparent 63px),
+    linear-gradient(var(--line), var(--line)),
+    radial-gradient(ellipse 80% 50% at 50% 0%, #2a2724 0%, transparent 70%);
+  background-size: 100% 100%, 100% 100%, 100% 2px, 100% 100%;
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  background-repeat: no-repeat;
 }
 
-a { color: var(--accent-2); }
+a { color: inherit; }
+a:focus-visible { outline: 3px solid var(--orange); outline-offset: 4px; }
 
 .wrap {
-  max-width: 720px;
+  max-width: 1040px;
   margin: 0 auto;
-  padding: 24px 16px 64px;
-}
-
-header.site {
+  padding-block: 56px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 24px;
+  flex-direction: column;
+  gap: 40px;
 }
 
-header.site a.home {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 0.95rem;
+/* ---------- Title ---------- */
+.hero { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
 }
-
-h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin: 0 0 8px; }
-h2 { margin: 0 0 8px; }
-.sub { color: var(--muted); margin: 0 0 24px; }
-
-.card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 20px;
+.hero h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 10vw, 6rem);
+  line-height: 0.95;
 }
+.hero h1 span { display: block; color: var(--gold); }
+.hero p.sub { margin: 0; color: var(--muted); font-size: 1.15rem; max-width: 46ch; text-wrap: balance; }
 
-.grid {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-}
+/* ---------- Game cards ---------- */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
 
-a.game-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 20px;
-  border: 2px solid transparent;
-  transition: border-color 0.15s, transform 0.15s;
-}
-a.game-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-a.game-card .emoji { font-size: 2rem; }
-a.game-card h2 { font-size: 1.2rem; margin-top: 8px; }
-a.game-card p { color: var(--muted); margin: 0; font-size: 0.95rem; }
-a.game-card .best { margin-top: 12px; font-size: 0.85rem; color: var(--accent-2); }
-
-.hud {
+.game-card {
   display: flex;
-  justify-content: space-between;
-  color: var(--muted);
-  font-size: 0.95rem;
-  margin-bottom: 12px;
+  flex-direction: column;
+  text-decoration: none;
+  background: var(--card);
+  border: 1px solid var(--card-edge);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
 }
+.game-card:hover { transform: translateY(-3px); border-color: var(--orange); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45); }
 
-.question { font-size: 1.25rem; font-weight: 600; margin: 0 0 16px; }
+.poster { height: 190px; position: relative; display: grid; place-items: center; overflow: hidden; }
 
-.options { display: grid; gap: 10px; }
-
-button {
-  font: inherit;
-  cursor: pointer;
-  border: none;
-  border-radius: 10px;
-  padding: 14px 16px;
-  background: var(--surface-2);
-  color: var(--text);
-  text-align: left;
-  transition: background 0.15s;
+/* Millionaire poster: navy stage, gold title, one answer lozenge */
+.poster.millionaire {
+  background: radial-gradient(ellipse 90% 80% at 50% 0%, #1f2f86 0%, var(--mil-navy) 55%, #060a22 100%);
 }
-button:hover:not(:disabled) { background: #2d3240; }
-button:disabled { cursor: default; }
-button.correct { background: var(--good); color: #fff; }
-button.wrong { background: var(--bad); color: #fff; }
-
-button.primary {
-  background: var(--accent);
-  color: #fff;
+.mil-art { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.mil-title {
+  font-family: "Saira Condensed", var(--font-cond);
+  font-weight: 800;
+  font-size: 2.2rem;
+  line-height: 0.9;
+  text-transform: uppercase;
   text-align: center;
-  font-weight: 600;
+  background: linear-gradient(180deg, #fff6d8 0%, #ffc94a 55%, #c98a12 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-button.primary:hover:not(:disabled) { background: var(--accent-2); }
+.mil-title b, .mil-title small { display: block; color: #f5f2ec; -webkit-text-fill-color: #f5f2ec; }
+.mil-title small { font-size: 0.5em; letter-spacing: 0.06em; margin-block: 2px; }
+.mil-loz {
+  --shape: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%);
+  clip-path: var(--shape);
+  padding: 2px;
+  background: linear-gradient(180deg, #dfe7ff, #9fb2e8 45%, #5a6db5);
+}
+.mil-loz span {
+  display: block;
+  clip-path: var(--shape);
+  padding: 7px 34px;
+  background: linear-gradient(180deg, #ffa262 0%, #f26b1d 50%, #b84a0c 100%);
+  color: #120700;
+  font-family: "Saira Condensed", var(--font-cond);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+}
 
-.feedback { min-height: 1.5em; margin: 14px 0; color: var(--muted); }
+/* Jeopardy poster: a slice of the blue board */
+.poster.jeopardy { background: #000; padding: 6px; }
+.jep-art { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; width: 100%; height: 100%; }
+.jep-art div {
+  background: var(--jep-blue);
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 -10px 18px rgba(0, 0, 0, 0.25);
+  font-family: "Anton", Impact, sans-serif;
+  color: #ffcc33;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 0 #000;
+}
+.jep-art .head { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 0.8rem; color: #fff; text-transform: uppercase; text-align: center; line-height: 1.05; padding: 4px; }
+.jep-art .done { background: #071461; }
 
-.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.card-body h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.45rem;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.card-body p { margin: 0; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(229, 169, 60, 0.12);
+  color: var(--gold);
+}
+.card-foot { margin-top: auto; padding-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.best { font-size: 0.92rem; color: var(--gold); font-variant-numeric: tabular-nums; }
+.play {
+  margin-left: auto;
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--orange);
+  color: #1a1a1a;
+  transition: background 0.18s;
+}
+.game-card:hover .play { background: #f4804f; }
 
-.big-score { font-size: 3rem; font-weight: 800; color: var(--accent); margin: 8px 0; }
+.empty { margin: 0; text-align: center; color: var(--muted); }
 
-.hidden { display: none !important; }
+footer.site { text-align: center; color: var(--muted); font-size: 0.85rem; opacity: 0.8; }
+
+@media (max-width: 560px) {
+  .wrap { padding-block: 36px 32px; gap: 28px; }
+  .poster { height: 160px; }
+  .mil-title { font-size: 1.9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-card, .play { transition: none; }
+  .game-card:hover { transform: none; }
+}

@@ -2,37 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>NBA Trivia Games</title>
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <meta name="description" content="Free NBA trivia games: Who Wants to Be a Millionaire and Jeopardy!, built for hoops fans.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Libre+Franklin:wght@400;500;600;700&family=Anton&family=Barlow+Condensed:wght@700&family=Saira+Condensed:wght@700;800&display=swap">
   <link rel="stylesheet" href="shared/styles.css">
 </head>
 <body>
   <main class="wrap">
-    <h1>🏀 NBA Trivia Games</h1>
-    <p class="sub">Pick a game and test your hoops knowledge.</p>
+    <header class="hero">
+      <p class="eyebrow" id="count"></p>
+      <h1>NBA <span>Trivia Games</span></h1>
+      <p class="sub">Pick a game and find out how much you really know about the league.</p>
+    </header>
 
-    <div class="grid" id="games"></div>
-    <p class="sub" id="empty">No games yet. Check back soon!</p>
+    <section class="grid" id="games" aria-label="Games"></section>
+    <p class="empty" id="empty">No games yet. Check back soon!</p>
+
+    <footer class="site">Fan-made trivia games. Not affiliated with the NBA, its teams, or any TV show.</footer>
   </main>
 
   <script src="shared/utils.js"></script>
   <script>
     // To add a game: create games/<id>/index.html and add an entry here.
+    // poster is the mini artwork at the top of the card.
     const GAMES = [
-      { id: "millionaire", emoji: "💰", title: "NBA Who Wants to Be a Millionaire",
-        desc: "15 questions from Easy to Expert, three lifelines and a $1,000,000 top prize." },
-      { id: "jeopardy", emoji: "🟦", title: "NBA Jeopardy!",
-        desc: "Play solo with typed answers, or host a game for up to 6 players with a separate player screen." },
+      {
+        id: "millionaire",
+        title: "NBA Who Wants to Be a Millionaire",
+        desc: "15 questions from Easy to Expert, three lifelines and a $1,000,000 top prize.",
+        tags: ["Solo", "200 questions", "5 difficulty tiers"],
+        poster: `<div class="poster millionaire"><div class="mil-art">
+                   <div class="mil-title"><b>NBA</b><small>Who Wants to Be a</small>Millionaire</div>
+                   <div class="mil-loz"><span>$1,000,000</span></div>
+                 </div></div>`,
+      },
+      {
+        id: "jeopardy",
+        title: "NBA Jeopardy!",
+        desc: "Play solo with typed answers, or host a game for up to 6 players with a separate player screen.",
+        tags: ["Solo or 2–6 players", "34 categories", "Host + player screens"],
+        poster: `<div class="poster jeopardy"><div class="jep-art">
+                   <div class="head">Draft Steals</div><div class="head">Iconic Shots</div><div class="head">'90s Icons</div><div class="head">Mascots</div>
+                   <div>$200</div><div class="done"></div><div>$200</div><div>$200</div>
+                   <div>$400</div><div>$400</div><div class="done"></div><div>$400</div>
+                 </div></div>`,
+      },
     ];
 
+    const money = n => (n < 0 ? "-$" : "$") + Math.abs(n).toLocaleString("en-US");
+    const plural = n => n + (n === 1 ? " game" : " games");
+
+    document.getElementById("count").textContent = "Game night · " + plural(GAMES.length);
     document.getElementById("empty").hidden = GAMES.length > 0;
-    document.getElementById("games").innerHTML = GAMES.map(g => `
+    document.getElementById("games").innerHTML = GAMES.map(g => {
+      const best = getBest(g.id);
+      return `
       <a class="game-card" href="games/${g.id}/">
-        <div class="emoji">${g.emoji}</div>
-        <h2>${g.title}</h2>
-        <p>${g.desc}</p>
-        <div class="best">${getBest(g.id) ? "Your best: " + getBest(g.id) : ""}</div>
-      </a>`).join("");
+        ${g.poster}
+        <div class="card-body">
+          <h2>${g.title}</h2>
+          <p>${g.desc}</p>
+          <div class="tags">${g.tags.map(t => `<span>${t}</span>`).join("")}</div>
+          <div class="card-foot">
+            ${best ? `<span class="best">Your best: ${money(best)}</span>` : ""}
+            <span class="play">Play →</span>
+          </div>
+        </div>
+      </a>`;
+    }).join("");
   </script>
 </body>
 </html>
